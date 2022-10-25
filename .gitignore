@@ -1,0 +1,6 @@
+**/objs
+**/build
+**/generated
+
+makefile*
+**/.DS_Store
