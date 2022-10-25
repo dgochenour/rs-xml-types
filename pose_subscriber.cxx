@@ -34,7 +34,7 @@ int process_data(dds::sub::DataReader<don::Pose> reader) {
 
 int main(int argc, char *argv[]) {
 
-    dds::domain::DomainParticipant participant(0);
+    dds::domain::DomainParticipant participant(1);
     dds::topic::Topic<don::Pose> topic(participant, don::pose_topic_name);
     dds::sub::Subscriber subscriber(participant);
     dds::sub::DataReader<don::Pose> reader(subscriber, topic);
