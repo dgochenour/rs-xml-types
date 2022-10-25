@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:////Applications/rti_connext_dds-6.1.1/bin/../resource/app/app_support/rtiddsgen/schema/rti_dds_profiles.xsd">
+<types>
+<include file="Point.xml"/>
+<include file="Quaternion.xml"/>
+<module name="don">
+  <const name="pose_topic_name" type="string" value="&quot;Pose Location&quot;"/>
+  <struct name= "Pose">
+    <member name="obj_id" type="int32" key="true"/>
+    <member name="position" type="nonBasic"  nonBasicTypeName= "don::Point"/>
+    <member name="orientation" type="nonBasic"  nonBasicTypeName= "don::Quaternion"/>
+  </struct>
+</module>
+</types>
+</dds>
