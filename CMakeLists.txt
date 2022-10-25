@@ -72,6 +72,12 @@ add_executable(pose_publisher
 )
 target_link_libraries(pose_publisher ${CONNEXT_PRO_LIBS} ${SYSLIBS})
 
+set_target_properties(pose_publisher PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES 
+    CXX_EXTENSIONS NO 
+)
+
 add_executable(pose_subscriber
     ${CMAKE_CURRENT_SOURCE_DIR}/pose_subscriber.cxx
     ${IDL_GEN_CXX}
@@ -79,4 +85,8 @@ add_executable(pose_subscriber
 )
 target_link_libraries(pose_subscriber ${CONNEXT_PRO_LIBS} ${SYSLIBS})
 
-
+set_target_properties(pose_subscriber PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES 
+    CXX_EXTENSIONS NO 
+)
