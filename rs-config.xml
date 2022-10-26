@@ -2,6 +2,32 @@
 <dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/6.1.1/rti_routing_service.xsd">
 
+    <types>
+        <!--
+        <include file="./xmltype/Point.xml"/>
+        <include file="./xmltype/Quaternion.xml"/>
+        <include file="./xmltype/Pose.xml"/>
+        -->
+        <module name="don">
+            <struct name= "Point" nested="true">
+                <member name="x" type="float64"/>
+                <member name="y" type="float64"/>
+                <member name="z" type="float64"/>
+            </struct>
+            <struct name= "Quaternion" nested="true">
+                <member name="x" type="float64"/>
+                <member name="y" type="float64"/>
+                <member name="z" type="float64"/>
+                <member name="w" type="float64"/>
+            </struct>
+            <struct name= "Pose">
+                <member name="obj_id" type="int32" key="true"/>
+                <member name="position" type="nonBasic"  nonBasicTypeName= "don::Point"/>
+                <member name="orientation" type="nonBasic"  nonBasicTypeName= "don::Quaternion"/>
+            </struct>            
+        </module>        
+    </types>
+
     <routing_service name="PoseBothWays">
 
         <annotation>
@@ -41,52 +67,44 @@
 
         <domain_route name="TwoWayDomainRoute">
 
-            <participant name="1">
+            <participant name="Domain0">
                 <domain_id>0</domain_id>
+                <register_type name="PoseName" type_ref="don::Pose"/>
             </participant>
 
-            <participant name="2">
+            <participant name="Domain1">
                 <domain_id>1</domain_id>
+                <register_type name="PoseName" type_ref="don::Pose"/>
             </participant>
 
             <session name="Session1">
-                <auto_topic_route name="AllForward">
-                    <publish_with_original_info>true</publish_with_original_info>
-                    <input participant="1">
-                        <creation_mode>ON_DOMAIN_AND_ROUTE_MATCH</creation_mode>
-                        <allow_topic_name_filter>*</allow_topic_name_filter>
-                        <allow_registered_type_name_filter>*</allow_registered_type_name_filter>
-                        <!-- Exclude monitoring, administration and logging 
-                            topics -->
-                        <deny_topic_name_filter>rti/*</deny_topic_name_filter>
+                <topic_route name="RoutePoseForward">
+                    <input participant="Domain0">
+                        <!--creation_mode>IMMEDIATE</creation_mode-->                    
+                        <topic_name>Pose Topic</topic_name>
+                        <registered_type_name>PoseName</registered_type_name>
                     </input>
-                    <output>
-                        <creation_mode>ON_DOMAIN_AND_ROUTE_MATCH</creation_mode>
-                        <allow_topic_name_filter>*</allow_topic_name_filter>
-                        <allow_registered_type_name_filter>*</allow_registered_type_name_filter>
-                        <!-- Exclude monitoring, administration and logging 
-                            topics -->
-                        <deny_topic_name_filter>rti/*</deny_topic_name_filter>
+                    <output participant="Domain1">
+                        <!--creation_mode>IMMEDIATE</creation_mode--> 
+                        <topic_name>Pose Topic</topic_name>
+                        <registered_type_name>PoseName</registered_type_name>
                     </output>
-                </auto_topic_route>
+                </topic_route>
             </session>
 
             <session name="Session2">
-                <auto_topic_route name="AllBackward">
-                    <publish_with_original_info>true</publish_with_original_info>
-                    <input participant="2">
-                        <creation_mode>ON_DOMAIN_AND_ROUTE_MATCH</creation_mode>
-                        <allow_topic_name_filter>*</allow_topic_name_filter>
-                        <allow_registered_type_name_filter>*</allow_registered_type_name_filter>
-                        <deny_topic_name_filter>rti/*</deny_topic_name_filter>
+                <topic_route name="RoutePoseBackward">
+                    <input participant="Domain1">
+                        <creation_mode>IMMEDIATE</creation_mode>                    
+                        <topic_name>Pose Topic</topic_name>
+                        <registered_type_name>PoseName</registered_type_name>
                     </input>
-                    <output>
-                        <creation_mode>ON_DOMAIN_AND_ROUTE_MATCH</creation_mode>
-                        <allow_topic_name_filter>*</allow_topic_name_filter>
-                        <allow_registered_type_name_filter>*</allow_registered_type_name_filter>
-                        <deny_topic_name_filter>rti/*</deny_topic_name_filter>
+                    <output participant="Domain0">
+                        <creation_mode>IMMEDIATE</creation_mode>                     
+                        <topic_name>Pose Topic</topic_name>
+                        <registered_type_name>PoseName</registered_type_name>
                     </output>
-                </auto_topic_route>
+                </topic_route>
             </session>
 
         </domain_route>
