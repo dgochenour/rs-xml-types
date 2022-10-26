@@ -12,7 +12,7 @@
 #include "Quaternion.idl"
 
 module don {
-const string pose_topic_name = "Pose Location";
+const string pose_topic_name = "Pose Topic";
 
 struct Pose {
     @key long obj_id;

@@ -4,7 +4,7 @@
 <include file="Point.xml"/>
 <include file="Quaternion.xml"/>
 <module name="don">
-  <const name="pose_topic_name" type="string" value="&quot;Pose Location&quot;"/>
+  <const name="pose_topic_name" type="string" value="&quot;Pose Topic&quot;"/>
   <struct name= "Pose">
     <member name="obj_id" type="int32" key="true"/>
     <member name="position" type="nonBasic"  nonBasicTypeName= "don::Point"/>
