@@ -2,7 +2,10 @@
 
 ## Description
 
-This example demonstrates how XML type definition can be used in an RTI Routing Service configuration. The repo contains three main components:
+This example demonstrates how XML type definition can be used in an RTI Routing Service configuration. CUrrently, the example includes type definitions in the Routing Serivce configuration XML file. The eventual goal is to be able to include `rtiddsgen`-generated XML type definitions as external files; however, this goal must wait until 6he Connext Professional 6.1.2 maintenance release.
+
+
+The repo contains three main components:
 - `pose_publisher` 
     - Simple DDS application that publishes samples of type `Pose` to the Topic `Pose Topic` in **Domain 0**
 - `pose_subscriber`
